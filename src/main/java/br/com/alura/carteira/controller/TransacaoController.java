@@ -1,9 +1,13 @@
 package br.com.alura.carteira.controller;
 
 import java.util.stream.*;
+
+import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +23,7 @@ import br.com.alura.carteira.modelo.Transacao;
 public class TransacaoController {
 	
 	private List<Transacao> transacoes = new ArrayList<>();
-	
+	ModelMapper modelMapper = new ModelMapper();
 	@GetMapping
 	public List<TransacaoDto> listar()
 	{
@@ -32,13 +36,22 @@ public class TransacaoController {
 	//		dto.setTipo(transacao.getTipo());
 	//		transacoesDto.add(dto);
 	//	}
-		return transacoes.stream().map(TransacaoDto ::new).collect(Collectors.toList());
+		
+		//ModelMapper modelMapper = new ModelMapper();
+		//OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+	
+		
+		return transacoes
+				.stream()
+				.map(t -> modelMapper.map(t, TransacaoDto.class))
+				.collect(Collectors.toList());
 	}
 	@PostMapping 
-	public void cadastrar(@RequestBody TransacaoFormDto dto){
+	public void cadastrar(@RequestBody @Valid TransacaoFormDto dto){
 
+	Transacao transacao = modelMapper.map(dto, Transacao.class);
 	
-	Transacao transacao = new Transacao(dto.getTicker(), dto.getPreco()  , dto.getQuantidade(),dto.getData(), dto.getTipo());
+	
 	 transacoes.add(transacao);
 	}
 

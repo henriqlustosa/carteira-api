@@ -2,21 +2,19 @@ package br.com.alura.carteira.modelo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 @Getter
 @Setter
+@ToString(exclude = { "data", "quantidade","tipo"})
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transacao {
 
-	public Transacao(String ticker, BigDecimal preco, int quantidade, LocalDate data, TipoTransacao tipo) {
-		// TODO Auto-generated constructor stub
-		this.ticker = ticker;
-		this.preco = preco;
-		this.quantidade = quantidade;
-		this.data = data;
-		
-		this.tipo = tipo;
-	}
 
 	private String ticker;
 	

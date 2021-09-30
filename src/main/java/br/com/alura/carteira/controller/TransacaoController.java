@@ -1,13 +1,10 @@
 package br.com.alura.carteira.controller;
 
-import java.util.stream.*;
-
 import javax.validation.Valid;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,43 +13,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
-import br.com.alura.carteira.modelo.Transacao;
+
+import br.com.alura.carteira.service.TransacaoService;
 
 @RestController
 @RequestMapping("/transacoes")
 public class TransacaoController {
-	
-	private List<Transacao> transacoes = new ArrayList<>();
-	ModelMapper modelMapper = new ModelMapper();
-	@GetMapping
-	public List<TransacaoDto> listar()
-	{
-	//	List<TransacaoDto> transacoesDto = new ArrayList<>();
-	//	for (Transacao transacao : transacoes) {
-	//		TransacaoDto dto = new TransacaoDto();
-	//		dto.setTicker(transacao.getTicker());
-	//		dto.setPreco(transacao.getPreco());
-	//		dto.setQuantidade(transacao.getQuantidade());
-	//		dto.setTipo(transacao.getTipo());
-	//		transacoesDto.add(dto);
-	//	}
-		
-		//ModelMapper modelMapper = new ModelMapper();
-		//OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-	
-		
-		return transacoes
-				.stream()
-				.map(t -> modelMapper.map(t, TransacaoDto.class))
-				.collect(Collectors.toList());
-	}
-	@PostMapping 
-	public void cadastrar(@RequestBody @Valid TransacaoFormDto dto){
+	@Autowired
+	private TransacaoService service;
 
-	Transacao transacao = modelMapper.map(dto, Transacao.class);
-	
-	
-	 transacoes.add(transacao);
+	@GetMapping
+	public List<TransacaoDto> listar() {
+		return service.getTransacoes();
+	}
+
+	@PostMapping
+	public void cadastrar(@RequestBody @Valid TransacaoFormDto dto) {
+
+		service.createTransacao(dto);
 	}
 
 }

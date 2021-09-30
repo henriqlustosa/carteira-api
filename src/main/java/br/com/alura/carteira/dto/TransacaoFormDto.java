@@ -16,9 +16,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class TransacaoFormDto {
-	 @NotNull
-	   @NotEmpty
-	   @Size(min=5, max = 6)
+	@NotNull
+	@NotEmpty
+	@Size(min=5, max = 6)
 	private String ticker;
 	
 	private BigDecimal preco;

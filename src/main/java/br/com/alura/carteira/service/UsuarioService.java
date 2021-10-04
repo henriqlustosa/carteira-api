@@ -5,14 +5,15 @@ import br.com.alura.carteira.modelo.*;
 
 import br.com.alura.carteira.repository.UsuarioRepository;
 
-import java.util.stream.Collectors;
 
 
-import java.util.List;
+
 import java.util.Random;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -25,12 +26,12 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 	private ModelMapper modelMapper = new ModelMapper();
 
-	public List<UsuarioDto> getUsuarios() {
-		List<Usuario> usuarios = usuarioRepository.findAll();
+	public Page<UsuarioDto> getUsuarios(Pageable paginacao) {
+		Page<Usuario> usuarios = usuarioRepository.findAll(paginacao);
 		return usuarios
-				.stream()
-				.map(t -> modelMapper.map(t, UsuarioDto.class))
-				.collect(Collectors.toList());
+				.map(t -> modelMapper.map(t, UsuarioDto.class));
+	
+		
 
 	}
 

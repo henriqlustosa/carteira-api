@@ -1,11 +1,14 @@
 package br.com.alura.carteira.modelo;
 
 import java.math.BigDecimal;
+
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,12 +16,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import lombok.ToString;
-@Getter
-@Setter
+
+@Data
 @ToString(exclude = { "data", "quantidade","tipo"})
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,7 +43,7 @@ public class Transacao {
 	@Enumerated(EnumType.STRING)
 	private TipoTransacao tipo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private Usuario usuario;
 	
 

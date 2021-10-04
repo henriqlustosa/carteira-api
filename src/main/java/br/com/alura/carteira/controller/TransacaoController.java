@@ -5,12 +5,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.alura.carteira.dto.MessageResponseDto;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 
@@ -23,14 +27,14 @@ public class TransacaoController {
 	private TransacaoService service;
 
 	@GetMapping
-	public List<TransacaoDto> listar() {
-		return service.getTransacoes();
+	public Page<TransacaoDto> listar(@PageableDefault(size = 10) Pageable paginacao) {
+		return service.getTransacoes(paginacao);
 	}
 
 	@PostMapping
-	public void cadastrar(@RequestBody @Valid TransacaoFormDto dto) {
+	public MessageResponseDto cadastrar(@RequestBody @Valid TransacaoFormDto dto) {
 
-		service.createTransacao(dto);
+		return service.createTransacao(dto);
 	}
 
 }

@@ -17,6 +17,8 @@ public class UsuarioFormDto {
 		public String nome;
 	    @NotBlank
 		public String login;
+	    @NotBlank
+		public String senha;
 	 
 
 }

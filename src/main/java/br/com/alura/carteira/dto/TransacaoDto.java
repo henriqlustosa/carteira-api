@@ -14,11 +14,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class TransacaoDto {
-
+    private Long id;
 	private String ticker;
 	private BigDecimal preco;
 	private LocalDate data;
-	private int quantidade;
+	private Integer quantidade;
 	private TipoTransacao tipo;
 
 	

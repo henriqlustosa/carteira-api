@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 
 public class UsuarioDto {
-    
-	public String nome;
-	public String login;
+	private Long id;
+	private String nome;
+
 
 }

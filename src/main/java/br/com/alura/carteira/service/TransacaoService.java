@@ -1,15 +1,18 @@
 package br.com.alura.carteira.service;
 
+import java.util.Random;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.alura.carteira.dto.MessageResponseDto;
+
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.modelo.Transacao;
+
 import br.com.alura.carteira.repository.TransacaoRepository;
 import lombok.RequiredArgsConstructor;
 @Service
@@ -29,21 +32,25 @@ public class TransacaoService {
 
 	}
 
-	public MessageResponseDto createTransacao(TransacaoFormDto transacaoFormDto) {
+	public TransacaoDto createTransacao(TransacaoFormDto transacaoFormDto) {
 		
 		Transacao transacaoToSave = modelMapper.map(transacaoFormDto, Transacao.class);
+		String senha = new Random().nextInt(999999) + "";
+		transacaoToSave.getUsuario().setSenha(senha);
+	
+		
 		
 		Transacao savedTransacao = transacaoRepository.save(transacaoToSave);
 
-		return createMessageResponse( savedTransacao.getId(), "Criado uma Transacao com ID");
+		return modelMapper.map(savedTransacao, TransacaoDto.class);
 	}
 
 	
 	
-	 private MessageResponseDto createMessageResponse(Long id, String message) {
+	 /*private MessageResponseDto createMessageResponse(Long id, String message) {
 	        return MessageResponseDto
 	                .builder()
 	                .message(message + id)
 	                .build();
-	    }
+	    }*/
 }

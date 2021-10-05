@@ -12,13 +12,12 @@ import lombok.Setter;
 
 public class UsuarioFormDto {
 	
-	
+	    
 	    @NotBlank
 		public String nome;
 	    @NotBlank
 		public String login;
-	    @NotBlank
-		public String senha;
+	
 	 
 
 }

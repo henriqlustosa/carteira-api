@@ -35,23 +35,24 @@ public class UsuarioService {
 
 	}
 
-	public MessageResponseDto createUsuario(UsuarioFormDto usuarioFormDto) {
+	public UsuarioDto createUsuario(UsuarioFormDto usuarioFormDto) {
 		Usuario usuarioToSave = modelMapper.map(usuarioFormDto, Usuario.class);
 		
 		String senha = new Random().nextInt(999999) + "";
 		usuarioToSave.setSenha(senha);
 
 		Usuario savedUsuario = usuarioRepository.save(usuarioToSave);
-		return createMessageResponse( savedUsuario.getId(), "Criado uma Transacao com ID");
+		
+		return modelMapper.map(savedUsuario,  UsuarioDto.class);
 		
 		
 	}
 	
-	 private MessageResponseDto createMessageResponse(Long id, String message) {
+	/* private MessageResponseDto createMessageResponse(Long id, String message) {
 	        return MessageResponseDto
 	                .builder()
 	                .message(message + id)
 	                .build();
 	    }
-
+*/
 }

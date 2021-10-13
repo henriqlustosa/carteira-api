@@ -2,15 +2,18 @@ package br.com.alura.carteira.service;
 
 import java.util.Random;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-
+import br.com.alura.carteira.dto.TransacaoDetalhadaDto;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
+import br.com.alura.carteira.exceptions.ResourceNotFoundException;
 import br.com.alura.carteira.modelo.Transacao;
 
 import br.com.alura.carteira.repository.TransacaoRepository;
@@ -45,7 +48,13 @@ public class TransacaoService {
 		return modelMapper.map(savedTransacao, TransacaoDto.class);
 	}
 
-	
+    @Transactional(readOnly = true)
+    public TransacaoDetalhadaDto mostrar(Long id) {
+        var transacao = transacaoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Transacao não encontrada: " + id));
+
+        return modelMapper.map(transacao, TransacaoDetalhadaDto.class);
+    }
 	
 	 /*private MessageResponseDto createMessageResponse(Long id, String message) {
 	        return MessageResponseDto

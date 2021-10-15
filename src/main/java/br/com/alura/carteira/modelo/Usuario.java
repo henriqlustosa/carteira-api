@@ -26,4 +26,9 @@ public class Usuario {
 	public String nome;
 	public String login;
 	public String senha;
+
+    public void atualizarInformacoes(String nome, String login) {
+        this.nome = nome;
+        this.login = login;
+    }
 }

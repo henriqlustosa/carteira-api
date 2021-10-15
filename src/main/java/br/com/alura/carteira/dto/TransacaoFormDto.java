@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
@@ -22,7 +22,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.Empty;
+
 
 
 @Data
@@ -30,7 +30,7 @@ import net.bytebuddy.implementation.bind.annotation.Empty;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransacaoFormDto {
-	
+		
 	@NotBlank
 	@Size(min=5, max = 6)
 	@Pattern(regexp ="[a-zA-Z]{4}[0-9][0-9]?" , message = "{transacao.ticker.invalido}")

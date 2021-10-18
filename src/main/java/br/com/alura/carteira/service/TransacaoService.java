@@ -45,38 +45,40 @@ public class TransacaoService {
 		String senha = new Random().nextInt(999999) + "";
 		transacaoToSave.getUsuario().setSenha(senha);
 	
-		
+		transacaoRepository.save(transacaoToSave);
 		
 		Transacao savedTransacao = transacaoRepository.save(transacaoToSave);
 
 		return modelMapper.map(savedTransacao, TransacaoDto.class);
 	}
 
-    @Transactional(readOnly = true)
-    public TransacaoDetalhadaDto mostrar(Long id) {
-        var transacao = transacaoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Transacao não encontrada: " + id));
+	@Transactional(readOnly = true)
+	public TransacaoDetalhadaDto mostrar(Long id) {
+		var transacao = transacaoRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Transacao não encontrada: " + id));
 
-        return modelMapper.map(transacao, TransacaoDetalhadaDto.class);
-    }
-    @Transactional
-    public TransacaoDto atualizar(TransacaoUpdateFormDto transacaoUpdateFormDto) {
-        try {
-            var transacao = transacaoRepository.getById(transacaoUpdateFormDto.getId());
+		return modelMapper.map(transacao, TransacaoDetalhadaDto.class);
+	}
 
-            transacao.atualizarInformacoes(transacaoUpdateFormDto.getTicker(), transacaoUpdateFormDto.getPreco(),
-                    transacaoUpdateFormDto.getQuantidade(), transacaoUpdateFormDto.getTipo(),
-                    transacaoUpdateFormDto.getData());
-            transacaoRepository.save(transacao);
+	@Transactional
+	public TransacaoDto atualizar(TransacaoUpdateFormDto transacaoUpdateFormDto) {
+		try {
+			var transacao = transacaoRepository.getById(transacaoUpdateFormDto.getId());
 
-            return modelMapper.map(transacao, TransacaoDto.class);
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Transacao inexistente: " + transacaoUpdateFormDto.getId());
-        }
-    }
-    @Transactional
-    public void remover(Long id) {
-        try {
+			transacao.atualizarInformacoes(transacaoUpdateFormDto.getTicker(), transacaoUpdateFormDto.getPreco(),
+					transacaoUpdateFormDto.getQuantidade(), transacaoUpdateFormDto.getTipo(),
+					transacaoUpdateFormDto.getData());
+			transacaoRepository.save(transacao);
+
+			return modelMapper.map(transacao, TransacaoDto.class);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Transacao inexistente: " + transacaoUpdateFormDto.getId());
+		}
+	}
+
+	@Transactional
+	public void remover(Long id) {
+		try {
             transacaoRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Transacao inexistente: " + id);

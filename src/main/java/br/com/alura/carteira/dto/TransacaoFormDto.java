@@ -18,17 +18,19 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import br.com.alura.carteira.modelo.TipoTransacao;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+
 import lombok.Data;
 
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 
 
 @Data
-@Builder
+
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class TransacaoFormDto {
 		
 	@NotBlank

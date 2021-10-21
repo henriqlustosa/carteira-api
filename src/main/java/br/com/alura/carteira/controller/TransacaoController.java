@@ -26,9 +26,12 @@ import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.dto.TransacaoUpdateFormDto;
 import br.com.alura.carteira.service.TransacaoService;
-
+import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/transacoes")
+@Api(tags = "Transações")
 public class TransacaoController {
 	@Autowired
 	private TransacaoService transacaoService;

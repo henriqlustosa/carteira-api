@@ -24,9 +24,12 @@ import br.com.alura.carteira.dto.UsuarioFormDto;
 
 
 import br.com.alura.carteira.service.UsuarioService;
-
+import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/usuarios")
+@Api(tags = "Usuários")
 public class UsuarioController {
 	@Autowired
 	private UsuarioService service;	

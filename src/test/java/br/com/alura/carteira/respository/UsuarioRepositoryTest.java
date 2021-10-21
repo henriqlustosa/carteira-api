@@ -1,48 +1,58 @@
 package br.com.alura.carteira.respository;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
 
-import br.com.alura.carteira.mocks.*;
-import br.com.alura.carteira.modelo.TipoTransacao;
-import br.com.alura.carteira.modelo.Transacao;
 import br.com.alura.carteira.modelo.Usuario;
-import br.com.alura.carteira.repository.TransacaoRepository;
+import br.com.alura.carteira.repository.UsuarioRepository;
 
-import java.math.BigDecimal;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import br.com.alura.carteira.mocks.UsuarioFactory;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@ActiveProfiles("test")
 public class UsuarioRepositoryTest {
-	@Autowired
-    private TransacaoRepository transacaoRepository;
+	 @Autowired
+	    private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private TestEntityManager testEntityManager;
+	    @Autowired
+	    private TestEntityManager testEntityManager;
 
-    private Usuario usuario;
-    
+	    private Usuario usuario;
+	
+	 @BeforeEach
+	    private void setUp() {
+	        usuario = UsuarioFactory.criarUsuarioSemId();
 
-    @BeforeEach
-    void setUp() {
-    	
-    	usuario = UsuarioFactory.criarUsuarioSemId();
-        testEntityManager.persist(usuario);
+	        testEntityManager.persist(usuario);
+	    }
 
-        Transacao t1 = TransacaoFactory.criarTransacao("ITSA4", BigDecimal.valueOf(10.00), 50, TipoTransacao.COMPRA,
-                usuario);
-        testEntityManager.persist(t1);
-        Transacao t2 = TransacaoFactory.criarTransacao("BBSE3", BigDecimal.valueOf(22.80), 80, TipoTransacao.COMPRA,
-                usuario);
-        testEntityManager.persist(t2);
-        Transacao t3 = TransacaoFactory.criarTransacao("EGIE3", BigDecimal.valueOf(40.00), 25, TipoTransacao.COMPRA,
-                usuario);
-        testEntityManager.persist(t3);
-        Transacao t4 = TransacaoFactory.criarTransacao("ITSA4", BigDecimal.valueOf(11.20), 40, TipoTransacao.COMPRA,
-                usuario);
-        testEntityManager.persist(t4);
-        Transacao t5 = TransacaoFactory.criarTransacao("SAPR4", BigDecimal.valueOf(4.02), 120, TipoTransacao.COMPRA,
-                usuario);
-        testEntityManager.persist(t5);
-    	
-    
-    }
+	    @Test
+	    void findByEmailDeveriaRetornarUmUsuarioValido() {
+	        var usuarioEncontrado = usuarioRepository.findByLogin(usuario.getLogin());
+
+	        assertEquals(usuario.getId(), usuarioEncontrado.getId());
+	        assertEquals(usuario.getLogin(), usuarioEncontrado.getLogin());
+	        assertEquals(usuario.getNome(), usuarioEncontrado.getNome());
+	    }
+
+	    @Test
+	    void findByNaoDeveriaTerRetornoComEmailNaoCadastrado() {
+	        var usuarioEncontrado = usuarioRepository.findByLogin("any@mail.com");
+
+	        assertNull(usuarioEncontrado);
+	    }
+
 }

@@ -61,6 +61,16 @@ public class UsuarioService {
 	        return modelMapper.map(usuario, UsuarioDto.class);
 	    }
 	 
+	 @Transactional(readOnly = true)
+	    public UsuarioDto detalhar(Long id) {
+	        try {
+	            var usuario = usuarioRepository.getById(id);
+
+	            return modelMapper.map(usuario, UsuarioDto.class);
+	        } catch (EntityNotFoundException e) {
+	            throw new ResourceNotFoundException("Usuário inexistente");
+	        }
+	    }
 	 
 	    @Transactional
 	    public UsuarioDto atualizar(UsuarioUpdateFormDto usuarioUpdateFormDto) {

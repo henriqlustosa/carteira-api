@@ -3,7 +3,7 @@ package br.com.alura.carteira.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.validation.Valid;
+
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +13,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
@@ -57,8 +58,8 @@ public class TransacaoFormDto {
 
 
 
-	@Valid
 	@NotNull
-	private UsuarioFormDto usuario;
+    @JsonAlias("usuario_id")
+    private Long usuarioId;
 
 }

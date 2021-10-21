@@ -45,5 +45,7 @@ public class CalculadorDeImpostoServiceTest {
 
 	        assertEquals(BigDecimal.valueOf(3000).setScale(2, RoundingMode.HALF_UP), imposto);
 	    }
+	    
+	    
 
 }

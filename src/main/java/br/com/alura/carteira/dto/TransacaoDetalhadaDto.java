@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class TransacaoDetalhadaDto extends TransacaoDto{
 	
-	 @JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
+	    @JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
 	    private LocalDate data;
 	    private UsuarioDto usuario;
 	

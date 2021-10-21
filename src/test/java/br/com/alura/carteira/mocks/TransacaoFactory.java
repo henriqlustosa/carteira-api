@@ -43,5 +43,9 @@ public class TransacaoFactory {
 		return TransacaoUpdateFormDto.builder().id(1L).ticker("XPTO1").preco(BigDecimal.valueOf(10.00)).quantidade(10)
 				.data(LocalDate.now()).tipo(TipoTransacao.VENDA).build();
 	}
-
+	
+	
+    public static TransacaoUpdateFormDto criarTransacaoUpdateFormDtoComIdInvalido() {
+        return TransacaoUpdateFormDto.builder().id(200L).build();
+    }
 }

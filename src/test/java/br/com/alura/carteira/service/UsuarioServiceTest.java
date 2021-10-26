@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class UsuarioServiceTest {
 	
@@ -77,7 +78,7 @@ public class UsuarioServiceTest {
     @Test
     void atualizarDeveLancarDomainExceptionQuandoUsuarioQuiserUtilizarLoginRegistrado() {
         when(usuarioRepository.getById(anyLong())).thenReturn(usuario);
-        when(usuarioRepository.findByLogin(anyString())).thenReturn(usuario);
+        when(usuarioRepository.findByLogin(anyString())).thenReturn(Optional.of(usuario));
 
         assertThrows(DomainException.class, () -> usuarioService.atualizar(usuarioUpdateFormComLoginDiferenteDto));
         verify(usuarioRepository, times(0)).save(any());

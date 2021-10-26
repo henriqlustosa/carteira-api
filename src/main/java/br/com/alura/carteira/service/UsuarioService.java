@@ -18,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,10 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	private ModelMapper modelMapper = new ModelMapper();
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public Page<UsuarioDto> getUsuarios(Pageable paginacao) {
 		Page<Usuario> usuarios = usuarioRepository.findAll(paginacao);
@@ -44,7 +48,7 @@ public class UsuarioService {
 		Usuario usuarioToSave = modelMapper.map(usuarioFormDto, Usuario.class);
 		
 		String senha = gerarSenha();
-		usuarioToSave.setSenha(senha);
+		usuarioToSave.setSenha(bCryptPasswordEncoder.encode(senha));
 
 		Usuario savedUsuario = usuarioRepository.save(usuarioToSave);
 		

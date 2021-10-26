@@ -36,7 +36,7 @@ public class TransacaoService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	private ModelMapper modelMapper = new ModelMapper();
+	private ModelMapper modelMapper;
 	
 
 	public Page<TransacaoDto> getTransacoes(Pageable paginacao) {

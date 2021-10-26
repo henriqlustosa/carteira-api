@@ -13,7 +13,9 @@ import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.repository.UsuarioRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Optional;
 
 import br.com.alura.carteira.mocks.UsuarioFactory;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -41,18 +43,18 @@ public class UsuarioRepositoryTest {
 
 	    @Test
 	    void findByEmailDeveriaRetornarUmUsuarioValido() {
-	        var usuarioEncontrado = usuarioRepository.findByLogin(usuario.getLogin());
+	        Optional<Usuario> usuarioEncontrado = usuarioRepository.findByLogin(usuario.getLogin());
 
-	        assertEquals(usuario.getId(), usuarioEncontrado.getId());
-	        assertEquals(usuario.getLogin(), usuarioEncontrado.getLogin());
-	        assertEquals(usuario.getNome(), usuarioEncontrado.getNome());
+	        assertEquals(usuario.getId(), usuarioEncontrado.get().getId());
+	        assertEquals(usuario.getLogin(), usuarioEncontrado.get().getLogin());
+	        assertEquals(usuario.getNome(), usuarioEncontrado.get().getNome());
 	    }
 
 	    @Test
 	    void findByNaoDeveriaTerRetornoComEmailNaoCadastrado() {
 	        var usuarioEncontrado = usuarioRepository.findByLogin("any@mail.com");
 
-	        assertNull(usuarioEncontrado);
+	        assertTrue(usuarioEncontrado.isEmpty());
 	    }
 
 }

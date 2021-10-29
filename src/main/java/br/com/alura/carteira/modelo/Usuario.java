@@ -1,13 +1,17 @@
 package br.com.alura.carteira.modelo;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
+import javax.persistence.JoinColumn;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,6 +29,7 @@ import lombok.ToString;
 @Entity
 @Table(name= "usuarios")
 public class Usuario implements UserDetails{
+	
 	/**
 	 * 
 	 */
@@ -32,10 +37,25 @@ public class Usuario implements UserDetails{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	public String nome;
-	public String login;
-	public String senha;
+	private String nome;
+	private String login;
+	private String senha;
 
+	@ManyToMany
+	@JoinTable(
+	        name = "perfis_usuarios",
+	        joinColumns = @JoinColumn(
+	                name = "usuario_id",
+	                referencedColumnName="id"
+
+	        ),
+	        inverseJoinColumns = @JoinColumn(
+	                name = "perfil_id",
+	                referencedColumnName="id"
+	             
+	        )
+	)
+	private List<Perfil> perfis = new ArrayList<>();
     public void atualizarInformacoes(String nome, String login) {
         this.nome = nome;
         this.login = login;
@@ -44,7 +64,7 @@ public class Usuario implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
-		return null;
+		return this.perfis;
 	}
 
 	@Override
@@ -73,13 +93,13 @@ public class Usuario implements UserDetails{
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
+
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
+
 		return true;
 	}
 }

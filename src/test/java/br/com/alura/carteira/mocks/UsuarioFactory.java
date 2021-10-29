@@ -13,11 +13,11 @@ public class UsuarioFactory {
     private static ModelMapper modelMapper = new ModelMapper();
 	
 	public static Usuario criarUsuario() {
-        return new Usuario(1L, "Henrique Lustosa", "henriqlustosa", "123123");
+        return new Usuario(1L, "Henrique Lustosa", "henriqlustosa", "123123",null);
     }
 
     public static Usuario criarUsuarioSemId() {
-        return new Usuario(null, "Henrique Lustosa", "henriqlustosa", "123123");
+        return new Usuario(null, "Henrique Lustosa", "henriqlustosa", "123123",null);
     }
 
     public static UsuarioFormDto criarUsuarioFormDto() {
@@ -25,13 +25,13 @@ public class UsuarioFactory {
     }
 
     public static UsuarioUpdateFormDto criarUsuarioUpdateFormComMesmoLoginDto() {
-        var usuario = new Usuario(1L, "Updated Henrique Lustosa", "henriqlustosa", "123123");
+        var usuario = new Usuario(1L, "Updated Henrique Lustosa", "henriqlustosa", "123123",null);
 
         return modelMapper.map(usuario, UsuarioUpdateFormDto.class);
     }
 
     public static UsuarioUpdateFormDto criarUsuarioUpdateFormComLoginDiferenteDto() {
-        var usuario = new Usuario(1L, "Updated Henrique Lustosa", "updatedmail", "123123");
+        var usuario = new Usuario(1L, "Updated Henrique Lustosa", "updatedmail", "123123",null);
 
         return modelMapper.map(usuario, UsuarioUpdateFormDto.class);
     }

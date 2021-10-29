@@ -30,7 +30,9 @@ public class AutenticacaoService implements UserDetailsService {
 	}
 
 	public String autenticar(@Valid LoginFormDto dto) {
-		Authentication authentication = new UsernamePasswordAuthenticationToken(dto.getLogin(), dto.getSenha());
+		Authentication authentication = new UsernamePasswordAuthenticationToken(
+				dto.getLogin(),
+				dto.getSenha());
 		authentication = authenticationManager.authenticate(authentication);
 
 		return tokenService.gerarToken(authentication);

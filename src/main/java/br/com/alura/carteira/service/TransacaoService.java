@@ -35,18 +35,17 @@ public class TransacaoService {
 	private TransacaoRepository transacaoRepository;
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
+	@Autowired
 	private ModelMapper modelMapper;
 	
-
+	@Transactional(readOnly = true)
 	public Page<TransacaoDto> getTransacoes(Pageable paginacao) {
 		
 		Page<Transacao> transacoes = transacaoRepository.findAll(paginacao);
-		return transacoes
-				.map(t -> modelMapper.map(t, TransacaoDto.class));
+		return transacoes.map(t -> modelMapper.map(t, TransacaoDto.class));
 
 	}
-
+	@Transactional
 	public TransacaoDto createTransacao(TransacaoFormDto transacaoFormDto) {
 		 try {
 		Transacao transacaoToSave = modelMapper.map(transacaoFormDto, Transacao.class);

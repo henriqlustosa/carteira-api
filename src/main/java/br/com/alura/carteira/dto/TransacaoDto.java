@@ -12,7 +12,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+
 public class TransacaoDto {
     private Long id;
 	private String ticker;

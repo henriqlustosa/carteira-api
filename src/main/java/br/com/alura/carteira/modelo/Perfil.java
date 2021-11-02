@@ -30,7 +30,7 @@ public class Perfil implements GrantedAuthority{
     private String nome;
 	@Override
 	public String getAuthority() {
-		// TODO Auto-generated method stub
+		
 		return this.nome;
 	}
 

@@ -2,11 +2,13 @@ package br.com.alura.carteira.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.alura.carteira.modelo.Transacao;
-
+import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.dto.ItemCarteiraDto;
 import br.com.alura.carteira.dto.ItemCarteiraProjection;
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
@@ -22,6 +24,8 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 	            + "(select sum(case when t2.tipo = 'COMPRA' then t2.quantidade else -t2.quantidade end) from Transacao t2) * 100.0 as percentual "
 	            + "FROM Transacao t group by t.ticker")
 	    List<ItemCarteiraProjection> relatorioCarteiraDeInvestimentosProjection();
+
+	Page<Transacao> findAllByUsuario(Pageable paginacao, Usuario usuarioLogado);
 	
 
 }

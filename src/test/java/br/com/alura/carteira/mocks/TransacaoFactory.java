@@ -2,6 +2,7 @@ package br.com.alura.carteira.mocks;
 
 import org.modelmapper.ModelMapper;
 
+import br.com.alura.carteira.dto.TransacaoDetalhadaDto;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.dto.TransacaoUpdateFormDto;
@@ -44,7 +45,9 @@ public class TransacaoFactory {
 				.data(LocalDate.now()).tipo(TipoTransacao.VENDA).build();
 	}
 	
-	
+	   public static TransacaoDetalhadaDto criarTransacaoDetalhadaResponseDto() {
+	        return modelMapper.map(criarTransacao(), TransacaoDetalhadaDto.class);
+	    }
     public static TransacaoUpdateFormDto criarTransacaoUpdateFormDtoComIdInvalido() {
         return TransacaoUpdateFormDto.builder().id(200L).build();
     }

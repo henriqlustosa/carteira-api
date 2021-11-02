@@ -6,13 +6,16 @@ import java.time.LocalDate;
 
 
 import br.com.alura.carteira.modelo.TipoTransacao;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+
 
 @Getter
 @Setter
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class TransacaoDto {
     private Long id;
 	private String ticker;

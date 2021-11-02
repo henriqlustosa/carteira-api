@@ -15,9 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.repository.UsuarioRepository;
 
-
 public class VerificacaoTokenFilter extends OncePerRequestFilter {
-	
 
 	private TokenService tokenService;
 
@@ -28,31 +26,30 @@ public class VerificacaoTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		String token = request.getHeader("Authorization");
-		
-		if(token == null || token.isBlank())
-		{
+
+		if (token == null || token.isEmpty()) {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		
-		token =token.replace("Bearer ","");
-		
-		
+
+		token = token.replace("Bearer ", "");
+
 		boolean tokenValido = tokenService.isValido(token);
 		if (tokenValido) {
-			Long idUsuario = tokenService.extrairIdUsuario(token);
-			Usuario logado = usuarioRepository.findById(idUsuario).get();
-			Authentication authentication = new UsernamePasswordAuthenticationToken(logado,null,null);
 			
+			Long idUsuario = tokenService.extrairIdUsuario(token);
+			Usuario logado = usuarioRepository.carrregaPorIdComPerfis(idUsuario).get();
+			Authentication authentication = new UsernamePasswordAuthenticationToken(logado, null, logado.getAuthorities());
+
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
-		
+
 		filterChain.doFilter(request, response);
-		
+
 	}
 
 	public VerificacaoTokenFilter(TokenService tokenService, UsuarioRepository usuarioRepository) {
-		
+
 		this.tokenService = tokenService;
 		this.usuarioRepository = usuarioRepository;
 	}

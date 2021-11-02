@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @RestControllerAdvice
@@ -31,7 +32,7 @@ public class TratamentosDeErros {
 	private ResponseEntity<ErrorResponse> buildValidationErrorResponse(MethodArgumentNotValidException ex,
 			HttpStatus status, String path) {
 
-		var errorResponse = ErrorResponse.builder()
+		ErrorResponse errorResponse = ErrorResponse.builder()
 				.status(status.value())
 				.erro(ex.getClass().getSimpleName())
 				.message("Erro de Validacao").caminho(path).build();
@@ -49,11 +50,15 @@ public class TratamentosDeErros {
 	                request.getRequestURI());
 	    }
 	  
-	  
+	    @ExceptionHandler(AccessDeniedException.class)
+	    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex,
+	            HttpServletRequest request) {
+	        return buildErrorResponse(ex, HttpStatus.FORBIDDEN, ex.getMessage(), request.getRequestURI());
+	    }
 	  
     private ResponseEntity<ErrorResponse> buildErrorResponse(Exception ex, HttpStatus status, String message,
             String path) {
-        var errorResponse = ErrorResponse.builder()
+        ErrorResponse errorResponse = ErrorResponse.builder()
         		.status(status.value()).erro(ex.getClass().getSimpleName())
                 .message(message)
                 .caminho(path)

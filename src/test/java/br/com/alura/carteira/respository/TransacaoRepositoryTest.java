@@ -1,6 +1,8 @@
 package br.com.alura.carteira.respository;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import br.com.alura.carteira.dto.*;
 
 import org.assertj.core.api.Assertions;
@@ -65,7 +67,7 @@ public class TransacaoRepositoryTest {
     
     @Test
     void deveriaRetornarRelatorioCarteiraDeInvestimentos() {
-        var relatorio = transacaoRepository.relatorioCarteiraDeInvestimentos();
+        List<ItemCarteiraDto> relatorio = transacaoRepository.relatorioCarteiraDeInvestimentos();
 
         Assertions.assertThat(relatorio).hasSize(4)
                 .extracting(ItemCarteiraDto::getTicker, ItemCarteiraDto::getQuantidade,
@@ -79,11 +81,11 @@ public class TransacaoRepositoryTest {
 
     @Test
     void deveriaRetornarRelatorioCarteiraDeInvestimentosConsiderandoVendas() {
-        var venda = TransacaoFactory.criarTransacao("ITSA4", BigDecimal.valueOf(11.20), 80, TipoTransacao.VENDA,
+        Transacao venda = TransacaoFactory.criarTransacao("ITSA4", BigDecimal.valueOf(11.20), 80, TipoTransacao.VENDA,
                 usuario);
         testEntityManager.persist(venda);
 
-        var relatorio = transacaoRepository.relatorioCarteiraDeInvestimentos();
+        List<ItemCarteiraDto> relatorio = transacaoRepository.relatorioCarteiraDeInvestimentos();
 
         Assertions.assertThat(relatorio).hasSize(4)
                 .extracting(ItemCarteiraDto::getTicker, ItemCarteiraDto::getQuantidade, ItemCarteiraDto::getPercentual)

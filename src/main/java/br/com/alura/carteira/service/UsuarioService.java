@@ -4,10 +4,11 @@ import br.com.alura.carteira.dto.*;
 import br.com.alura.carteira.exceptions.DomainException;
 import br.com.alura.carteira.exceptions.ResourceNotFoundException;
 import br.com.alura.carteira.modelo.*;
-
+import br.com.alura.carteira.repository.PerfilRepository;
 import br.com.alura.carteira.repository.UsuarioRepository;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.persistence.EntityNotFoundException;
@@ -31,6 +32,8 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	@Autowired
+	private PerfilRepository perfilRepository;
+	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
 	private ModelMapper modelMapper;
@@ -43,13 +46,15 @@ public class UsuarioService {
 		
 
 	}
-
+	@Transactional
 	public UsuarioDto createUsuario(UsuarioFormDto usuarioFormDto) {
 		Usuario usuarioToSave = modelMapper.map(usuarioFormDto, Usuario.class);
 		
+		usuarioToSave.setId(null);
+		usuarioToSave.getPerfis().add(perfilRepository.getById(usuarioFormDto.getPerfilId()));
+
 		String senha = gerarSenha();
 		usuarioToSave.setSenha(bCryptPasswordEncoder.encode(senha));
-
 		Usuario savedUsuario = usuarioRepository.save(usuarioToSave);
 		
 		return modelMapper.map(savedUsuario,  UsuarioDto.class);
@@ -59,7 +64,7 @@ public class UsuarioService {
 	
 	 @Transactional(readOnly = true)
 	    public UsuarioDto mostrar(Long id) {
-	        var usuario = usuarioRepository.findById(id)
+	        Usuario usuario = usuarioRepository.findById(id)
 	        		.orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado: " + id));
 
 	        return modelMapper.map(usuario, UsuarioDto.class);
@@ -68,7 +73,7 @@ public class UsuarioService {
 	 @Transactional(readOnly = true)
 	    public UsuarioDto detalhar(Long id) {
 	        try {
-	            var usuario = usuarioRepository.getById(id);
+	            Usuario usuario = usuarioRepository.getById(id);
 
 	            return modelMapper.map(usuario, UsuarioDto.class);
 	        } catch (EntityNotFoundException e) {
@@ -79,7 +84,7 @@ public class UsuarioService {
 	    @Transactional
 	    public UsuarioDto atualizar(UsuarioUpdateFormDto usuarioUpdateFormDto) {
 	        try {
-	            var usuario = usuarioRepository.getById(usuarioUpdateFormDto.getId());
+	            Usuario usuario = usuarioRepository.getById(usuarioUpdateFormDto.getId());
 	            if (!usuarioUpdateFormDto.getLogin().equalsIgnoreCase(usuario.getLogin())) {
 	                verificarLoginEmUso(usuarioUpdateFormDto.getLogin());
 	            }
@@ -104,7 +109,7 @@ public class UsuarioService {
 	    }
 	    
 	    private void verificarLoginEmUso(String login) {
-	        var usuario = usuarioRepository.findByLogin(login);
+	        Optional<Usuario> usuario = usuarioRepository.findByLogin(login);
 
 	        if (Objects.nonNull(usuario)) {
 	            throw new DomainException("Login já em uso por outro usuário");

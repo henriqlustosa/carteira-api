@@ -48,6 +48,8 @@ class TransacaoServiceTest {
     @Mock
     private ModelMapper modelMapper;
 
+    @Mock
+    private CalculadorDeImpostoService calculadoraImpostoService;
 
 	@InjectMocks
 	private TransacaoService transacaoService;
@@ -63,6 +65,7 @@ class TransacaoServiceTest {
 
 	private TransacaoUpdateFormDto transacaoUpdateFormDto = TransacaoFactory.criarTransacaoUpdateFormDtoComIdInvalido();
 	private TransacaoDetalhadaDto transacaoDetalhada =TransacaoFactory.criarTransacaoDetalhadaResponseDto();
+	 private Usuario logado = new Usuario(1l,"Henrique Lustoa", "henriqlustosa", "123456");
 	@Test
 	void deveriaCadastrarUmaTransacao() {
 		when(usuarioRepository.getById(anyLong())).thenReturn(usuario);
@@ -71,6 +74,9 @@ class TransacaoServiceTest {
 		when(transacaoRepository.save(Mockito.any(Transacao.class))).thenAnswer(i -> i.getArguments()[0]);
 		when(usuarioRepository.getById(transacaoFormDto.getUsuarioId()))
 				.thenReturn(usuario);
+		
+          when(usuarioRepository.getById(transacaoFormDto.getUsuarioId()))
+          .thenReturn(logado);
 
 		TransacaoDto dto = transacaoService.cadastrar(transacaoFormDto,usuarioLogado);
 		assertEquals(transacaoFormDto.getTicker(), dto.getTicker());

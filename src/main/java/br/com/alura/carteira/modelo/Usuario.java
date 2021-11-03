@@ -19,7 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import lombok.ToString;
@@ -30,6 +30,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
+@EqualsAndHashCode(of="id")
 public class Usuario implements UserDetails {
 
 	/**

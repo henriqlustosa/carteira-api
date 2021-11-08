@@ -35,8 +35,6 @@ import javax.persistence.EntityNotFoundException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
-
-
 @ExtendWith(MockitoExtension.class)
 class TransacaoServiceTest {
 
@@ -45,16 +43,14 @@ class TransacaoServiceTest {
 	@Mock
 	private UsuarioRepository usuarioRepository;
 
-    @Mock
-    private ModelMapper modelMapper;
-
+	@Mock
+	private ModelMapper modelMapper;
 
 	@InjectMocks
 	private TransacaoService transacaoService;
 
-    private Usuario usuario = UsuarioFactory.criarUsuario();
-    private Usuario usuarioLogado = UsuarioFactory.criarUsuario();
-    
+	private Usuario usuario = UsuarioFactory.criarUsuario();
+	private Usuario usuarioLogado = UsuarioFactory.criarUsuario();
 
 	private TransacaoFormDto transacaoFormDto = TransacaoFactory.criarTransacaoFormDto();
 
@@ -62,17 +58,17 @@ class TransacaoServiceTest {
 	private TransacaoDto transacaoResponseDto = TransacaoFactory.criarTransacaoResponseDto();
 
 	private TransacaoUpdateFormDto transacaoUpdateFormDto = TransacaoFactory.criarTransacaoUpdateFormDtoComIdInvalido();
-	private TransacaoDetalhadaDto transacaoDetalhada =TransacaoFactory.criarTransacaoDetalhadaResponseDto();
+	private TransacaoDetalhadaDto transacaoDetalhada = TransacaoFactory.criarTransacaoDetalhadaResponseDto();
+
 	@Test
 	void deveriaCadastrarUmaTransacao() {
 		when(usuarioRepository.getById(anyLong())).thenReturn(usuario);
-		 when(modelMapper.map(transacaoFormDto, Transacao.class)).thenReturn(transacao);
-	        when(modelMapper.map(transacao, TransacaoDto.class)).thenReturn(transacaoResponseDto);
+		when(modelMapper.map(transacaoFormDto, Transacao.class)).thenReturn(transacao);
+		when(modelMapper.map(transacao, TransacaoDto.class)).thenReturn(transacaoResponseDto);
 		when(transacaoRepository.save(Mockito.any(Transacao.class))).thenAnswer(i -> i.getArguments()[0]);
-		when(usuarioRepository.getById(transacaoFormDto.getUsuarioId()))
-				.thenReturn(usuario);
+		when(usuarioRepository.getById(transacaoFormDto.getUsuarioId())).thenReturn(usuario);
 
-		TransacaoDto dto = transacaoService.cadastrar(transacaoFormDto,usuarioLogado);
+		TransacaoDto dto = transacaoService.cadastrar(transacaoFormDto, usuarioLogado);
 		assertEquals(transacaoFormDto.getTicker(), dto.getTicker());
 		assertEquals(transacaoFormDto.getPreco(), dto.getPreco());
 		assertEquals(transacaoFormDto.getQuantidade(), dto.getQuantidade());
@@ -87,14 +83,15 @@ class TransacaoServiceTest {
 	void atualizarDeveLancarResourceNotFoundQuandoTransacaoIdInvalido() {
 		when(transacaoRepository.getById(anyLong())).thenThrow(EntityNotFoundException.class);
 
-		assertThrows(ResourceNotFoundException.class, () -> transacaoService.atualizar(transacaoUpdateFormDto,usuarioLogado));
+		assertThrows(ResourceNotFoundException.class,
+				() -> transacaoService.atualizar(transacaoUpdateFormDto, usuarioLogado));
 	}
 
 	@Test
 	void mostrarDeveRetornarTransacaoQuandoIdValido() {
 		when(transacaoRepository.findById(anyLong())).thenReturn(Optional.of(transacao));
 		when(modelMapper.map(transacao, TransacaoDetalhadaDto.class)).thenReturn(transacaoDetalhada);
-		TransacaoDetalhadaDto transacaoResponseDto = transacaoService.mostrar(1l,usuarioLogado);
+		TransacaoDetalhadaDto transacaoResponseDto = transacaoService.mostrar(1l, usuarioLogado);
 
 		assertEquals(transacao.getId(), transacaoResponseDto.getId());
 		assertEquals(transacao.getTicker(), transacaoResponseDto.getTicker());
@@ -105,25 +102,24 @@ class TransacaoServiceTest {
 
 	@Test
 	void mostrarDeveLancarResouceNotFoundQuandoIdTransacaoInvalido() {
-		
+
 		assertThrows(ResourceNotFoundException.class, () -> transacaoService.mostrar(10l, usuarioLogado));
 	}
-	
 
-    @Test
-    void removerDeveriaLancarResourceNotFoundQuandoIdInvalido() {
-    	
-    	long invalidId = 100l;
-        doThrow(EntityNotFoundException.class).when(transacaoRepository).getById(invalidId);
+	@Test
+	void removerDeveriaLancarResourceNotFoundQuandoIdInvalido() {
 
-        assertThrows(ResourceNotFoundException.class, () -> transacaoService.remover(100L, usuarioLogado));
-    }
+		long invalidId = 100l;
+		doThrow(EntityNotFoundException.class).when(transacaoRepository).getById(invalidId);
+
+		assertThrows(ResourceNotFoundException.class, () -> transacaoService.remover(100L, usuarioLogado));
+	}
 
 	@Test
 	void removerNaoDeveTerRetornoComIdValido() {
 		Long validId = 1l;
 		when(transacaoRepository.getById(validId)).thenReturn(transacao);
-		transacaoService.remover(validId,usuarioLogado);
+		transacaoService.remover(validId, usuarioLogado);
 
 		verify(transacaoRepository, times(1)).deleteById(1l);
 	}

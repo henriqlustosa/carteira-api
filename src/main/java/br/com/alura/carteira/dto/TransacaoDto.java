@@ -23,6 +23,7 @@ public class TransacaoDto {
 	private LocalDate data;
 	private Integer quantidade;
 	private TipoTransacao tipo;
+	private BigDecimal imposto;
 
 	
 

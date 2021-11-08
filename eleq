@@ -1,0 +1,113 @@
+[33mcommit 8c3c7140010d23ab2ec45a7063ca2c47ed6e2408[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Henrique <henriqlustosa@gmail.com>
+Date:   Tue Nov 2 16:11:58 2021 -0300
+
+    Finalizado os testes dos Controllers e Repositories para compatibilizacao com a geracao do token
+
+[33mcommit 2d237e27066783996ca8c1df753ab6988bbbb958[m[33m ([m[1;32mdesenvolvimento[m[33m)[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Fri Oct 29 15:53:32 2021 -0300
+
+    Criacao do endpoint de autorizacao e a funcionalidade de Perfil
+
+[33mcommit 1308e96e00b933b0936fe3facf388ebb47e1c324[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Tue Oct 26 18:02:37 2021 -0300
+
+    Autenticacao Stateless
+
+[33mcommit 5b5fe975ba1c874346ff84269d9e05a671989209[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Tue Oct 26 11:48:06 2021 -0300
+
+    Controle de acesso com Spring Security
+
+[33mcommit 665271fb2a0592ebd24ea0f3387e325de58ddda8[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Fri Oct 22 18:05:04 2021 -0300
+
+    Criado um relatorio por meio de uma interface
+
+[33mcommit 7500da11221fa076cca85f596b92acd5e507967b[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Thu Oct 21 14:46:59 2021 -0300
+
+    Finalizado a documentacao com Swagger, Testes Automatizados: Services, repository e controller
+
+[33mcommit 7dc6cb39c47e4c32217603cbd03d57cdeee3caa9[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Mon Oct 18 18:24:23 2021 -0300
+
+    Primeiros testes de unidade
+
+[33mcommit a26c4374ec660c42e8be5b9db3ea6d463d2c3777[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Fri Oct 15 13:56:03 2021 -0300
+
+    Completado o CRUD para as entidades Usuario e Transacao
+
+[33mcommit 12d2af18198c538163fa313398c168f4125b0b89[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Wed Oct 13 18:14:01 2021 -0300
+
+    Tratamento de errose funcionalidade de visualizacao de transacao detalhada
+
+[33mcommit e73e5712a0da84de918bc55ba0ce2bf1b146df80[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Wed Oct 6 12:33:33 2021 -0300
+
+    Deletada a classe MessageDto
+
+[33mcommit 1c2e88cc19bad2c91fd3fa3605867342757fe3bf[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Tue Oct 5 13:59:49 2021 -0300
+
+    Mensagem de erro no padrao API-Rest
+
+[33mcommit 474fa44b63f56df6f287bf054f109193e096a47b[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Tue Oct 5 11:43:31 2021 -0300
+
+    Criacao da funcionalidade Relatorio
+
+[33mcommit 71091f3b2b88e0d123bad74665fffa78d304a8e5[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Mon Oct 4 16:03:55 2021 -0300
+
+    Criacao da paginacao dos modelos Usuario e Transacao
+
+[33mcommit 93abefea7ed34ef61568c60e5f807548377a0ef8[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Fri Oct 1 12:52:50 2021 -0300
+
+    Aula 3
+
+[33mcommit 47f7f0e690dd2ccce7176561012803cb3b674520[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Thu Sep 30 11:24:12 2021 -0300
+
+    Atualizada a aplicacao encerrando o desafio 2
+
+[33mcommit 1ccb6ab52b668f2e9c3dc96447954790e6eca8d3[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Wed Sep 29 17:21:53 2021 -0300
+
+    Configuracao para utilizar o JPA
+
+[33mcommit aa4ec48133f8527799e4836436f641431a2b7dae[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Wed Sep 15 11:26:57 2021 -0300
+
+    Finalizado o exemplo do curso
+
+[33mcommit 04cb58bcecb60b020964b8eab013b56aefe9b4f0[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Tue Sep 14 18:35:28 2021 -0300
+
+    Finalizado o uso de API e nova funcionalidade Usuarios
+
+[33mcommit 9a802419115e541040ac9214169b1ab78d1bdd69[m
+Author: Henrique Lustosa <henriqlustosa@gmail.com>
+Date:   Tue Sep 14 15:23:39 2021 -0300
+
+    Inicio do projeo de uma API rest

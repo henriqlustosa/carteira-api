@@ -43,8 +43,16 @@ class TransacaoServiceTest {
 	@Mock
 	private UsuarioRepository usuarioRepository;
 
+<<<<<<< HEAD
 	@Mock
 	private ModelMapper modelMapper;
+=======
+    @Mock
+    private ModelMapper modelMapper;
+
+    @Mock
+    private CalculadorDeImpostoService calculadoraImpostoService;
+>>>>>>> b523c8a092205075fb185ebf8a8622826eb0d793
 
 	@InjectMocks
 	private TransacaoService transacaoService;
@@ -58,15 +66,28 @@ class TransacaoServiceTest {
 	private TransacaoDto transacaoResponseDto = TransacaoFactory.criarTransacaoResponseDto();
 
 	private TransacaoUpdateFormDto transacaoUpdateFormDto = TransacaoFactory.criarTransacaoUpdateFormDtoComIdInvalido();
+<<<<<<< HEAD
 	private TransacaoDetalhadaDto transacaoDetalhada = TransacaoFactory.criarTransacaoDetalhadaResponseDto();
 
+=======
+	private TransacaoDetalhadaDto transacaoDetalhada =TransacaoFactory.criarTransacaoDetalhadaResponseDto();
+	 private Usuario logado = new Usuario(1l,"Henrique Lustoa", "henriqlustosa", "123456");
+>>>>>>> b523c8a092205075fb185ebf8a8622826eb0d793
 	@Test
 	void deveriaCadastrarUmaTransacao() {
 		when(usuarioRepository.getById(anyLong())).thenReturn(usuario);
 		when(modelMapper.map(transacaoFormDto, Transacao.class)).thenReturn(transacao);
 		when(modelMapper.map(transacao, TransacaoDto.class)).thenReturn(transacaoResponseDto);
 		when(transacaoRepository.save(Mockito.any(Transacao.class))).thenAnswer(i -> i.getArguments()[0]);
+<<<<<<< HEAD
 		when(usuarioRepository.getById(transacaoFormDto.getUsuarioId())).thenReturn(usuario);
+=======
+		when(usuarioRepository.getById(transacaoFormDto.getUsuarioId()))
+				.thenReturn(usuario);
+		
+          when(usuarioRepository.getById(transacaoFormDto.getUsuarioId()))
+          .thenReturn(logado);
+>>>>>>> b523c8a092205075fb185ebf8a8622826eb0d793
 
 		TransacaoDto dto = transacaoService.cadastrar(transacaoFormDto, usuarioLogado);
 		assertEquals(transacaoFormDto.getTicker(), dto.getTicker());

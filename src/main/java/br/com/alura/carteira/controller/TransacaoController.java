@@ -30,6 +30,7 @@ import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.service.TransacaoService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/transacoes")
@@ -39,12 +40,12 @@ public class TransacaoController {
 	private TransacaoService transacaoService;
 
 	@GetMapping
-	public Page<TransacaoDto> listar(@PageableDefault(size = 10) Pageable paginacao, @AuthenticationPrincipal Usuario usuarioLogado ) {
+	public Page<TransacaoDto> listar(@PageableDefault(size = 10) Pageable paginacao,@ApiIgnore @AuthenticationPrincipal Usuario usuarioLogado ) {
 		return transacaoService.listar(paginacao,usuarioLogado );
 	}
 
 	@PostMapping
-	public ResponseEntity<TransacaoDto> cadastrar(@RequestBody @Valid TransacaoFormDto dto, UriComponentsBuilder uriBuilder, @AuthenticationPrincipal Usuario usuarioLogado) {
+	public ResponseEntity<TransacaoDto> cadastrar(@RequestBody @Valid TransacaoFormDto dto, UriComponentsBuilder uriBuilder,@ApiIgnore @AuthenticationPrincipal Usuario usuarioLogado) {
 		
 		TransacaoDto transacaoDto = transacaoService.cadastrar(dto, usuarioLogado);
 		
@@ -57,21 +58,21 @@ public class TransacaoController {
 	}
 	
 	 @GetMapping("/{id}")
-	 public TransacaoDetalhadaDto mostrar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuarioLogado ) {
+	 public TransacaoDetalhadaDto mostrar(@PathVariable Long id, @ApiIgnore @AuthenticationPrincipal Usuario usuarioLogado ) {
 	        return transacaoService.mostrar(id, usuarioLogado);
 	    }
 	 
 	 
 	    @PutMapping
 	    public ResponseEntity<TransacaoDto> atualizar(
-	            @RequestBody @Valid TransacaoUpdateFormDto transacaoUpdateFormDto, @AuthenticationPrincipal Usuario usuarioLogado) {
+	            @RequestBody @Valid TransacaoUpdateFormDto transacaoUpdateFormDto, @ApiIgnore @AuthenticationPrincipal Usuario usuarioLogado) {
 	        TransacaoDto transacao = transacaoService.atualizar(transacaoUpdateFormDto, usuarioLogado);
 
 	        return ResponseEntity.ok(transacao);
 	    }
 
 	    @DeleteMapping("/{id}")
-	    public ResponseEntity<Void> remover(@PathVariable Long id,  @AuthenticationPrincipal Usuario usuarioLogado) {
+	    public ResponseEntity<Void> remover(@PathVariable Long id, @ApiIgnore @AuthenticationPrincipal Usuario usuarioLogado) {
 	        transacaoService.remover(id, usuarioLogado);
 
 	        return ResponseEntity.noContent().build();

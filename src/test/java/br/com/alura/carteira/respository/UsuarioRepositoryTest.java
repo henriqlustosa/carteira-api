@@ -52,7 +52,7 @@ public class UsuarioRepositoryTest {
 
 	    @Test
 	    void findByNaoDeveriaTerRetornoComEmailNaoCadastrado() {
-	        Optional<Usuario> usuarioEncontrado = usuarioRepository.findByLogin("any@mail.com");
+	        Optional<Usuario> usuarioEncontrado = usuarioRepository.findByLogin("henriqlustosa");
 
 	        assertTrue(!usuarioEncontrado.isPresent());
 	    }

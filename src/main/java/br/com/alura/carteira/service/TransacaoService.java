@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
+
 
 import br.com.alura.carteira.dto.TransacaoDetalhadaDto;
 import br.com.alura.carteira.dto.TransacaoDto;
@@ -35,6 +35,8 @@ public class TransacaoService {
 	private UsuarioRepository usuarioRepository;
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private CalculadorDeImpostoService calculadorDeImpostoService;
 
 	@Transactional(readOnly = true)
 	public Page<TransacaoDto> listar(Pageable paginacao, Usuario usuarioLogado) {
@@ -58,6 +60,7 @@ public class TransacaoService {
 			transacaoToSave.setId(null);
 
 			transacaoToSave.setUsuario(usuarioRepository.getById(transacaoFormDto.getUsuarioId()));
+			transacaoToSave.setImposto(calculadorDeImpostoService.calcular(transacaoToSave));
 
 			Transacao savedTransacao = transacaoRepository.save(transacaoToSave);
 
